@@ -6,8 +6,8 @@ dotenv.config();
 
 const app = express();
 
-app.get("/", (req, res) => {
-    res.send("Server is ready!");
+app.post("/products", async (req, res) => {
+  const product  = req.body; //user will send this data
 });
 
 app.listen(5000, () =>{
