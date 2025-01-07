@@ -3,6 +3,7 @@ import { Box, Button, Container, Heading, VStack, Input } from '@chakra-ui/react
 import React from 'react';
 import { useState } from 'react';
 import { useProductStore } from '@/store/product';
+import { toaster } from "@/components/ui/toaster"
 
 const CreatePage = () => {
     const [newProduct, setNewProduct] = useState({
@@ -11,10 +12,32 @@ const CreatePage = () => {
         image: '',
     });
 
+    //const toast = useToast();
+
     const { createProduct } = useProductStore();
     const handleAddProduct = () => {
         const { success, message } = createProduct(newProduct);
-        console.log("Success:" + success, "Message:" + message);
+        if (!success) {
+            toaster.error({
+                title: "Error",
+                description: message,
+                duration: 5000,
+                isClosable: true,
+            });
+            //return;
+        } else {
+            toaster.success({
+                title: "Success",
+                description: message,
+                duration: 5000,
+                isClosable: true,
+            });
+            setNewProduct({
+                name: '',
+                price: '',
+                image: '',
+            });
+        }
     };
 
     return <Container maxW={"container.sm"}>
