@@ -2,6 +2,7 @@ import { useColorModeValue } from '@/components/ui/color-mode';
 import { Box, Button, Container, Heading, VStack, Input } from '@chakra-ui/react';
 import React from 'react';
 import { useState } from 'react';
+import { useProductStore } from '@/store/product';
 
 const CreatePage = () => {
     const [newProduct, setNewProduct] = useState({
@@ -10,8 +11,10 @@ const CreatePage = () => {
         image: '',
     });
 
+    const { createProduct } = useProductStore();
     const handleAddProduct = () => {
-        console.log(newProduct);
+        const { success, message } = createProduct(newProduct);
+        console.log("Success:" + success, "Message:" + message);
     };
 
     return <Container maxW={"container.sm"}>
